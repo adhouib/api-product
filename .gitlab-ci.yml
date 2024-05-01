@@ -1,0 +1,22 @@
+image: maven:3.8.8-eclipse-temurin-17-alpine
+
+stages:
+  - build
+  - test
+
+variables:
+# Define any environment variables needed for your project here
+
+build:
+  stage: build
+  script:
+    - echo "Building the project..."
+    - mvn clean install -DskipTests
+    # Add your actual build commands here
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - mvn test
+    # Add your actual test commands here
