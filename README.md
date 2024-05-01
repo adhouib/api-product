@@ -24,5 +24,5 @@ Développez un contrôleur REST avec les endpoints nécessaire pour effectuer le
 * Supprimer un produit >> sécuriser cette partie avec une authentification basic
 
 ### Lancement 
-le repertoire ressource contient deux fichiers: le premier est une collection d'appel et le deuxieme servira pour la configuration des variables d'environnement.
-Importez les deux fichier et lancez l'application Spring boot 
+Le répertoire ressource contient deux fichiers: le premier est une collection d'appel et le deuxième servira pour la configuration des variables d'environnement pour Postman
+Importez les deux fichiers et lancez l'application Spring boot
