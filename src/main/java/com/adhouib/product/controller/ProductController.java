@@ -51,4 +51,18 @@ public class ProductController {
                 .orElseThrow(() -> new TechnicalException("Object not found"));
     }
 
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDTO updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO) throws TechnicalException {
+        if (id == null) {
+            throw new TechnicalException("id can't be null");
+        }
+        if (productDTO == null) {
+            throw new TechnicalException("ProductDTO can't be null");
+        }
+        Product productToUpdate = productConverter.convert(productDTO);
+        return productService.updateProduct(id, productToUpdate).map(productDTOConverter::convert)
+                .orElseThrow(() -> new TechnicalException("Object is null"));
+    }
+
 }

@@ -73,6 +73,7 @@ public class ProductServiceImplTest {
 
     @Test
     public void testGetAllProducts() {
+        // Given
         List<ProductEntity> productEntityList = new LinkedList<>();
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(101L);
@@ -89,9 +90,9 @@ public class ProductServiceImplTest {
         productEntityList.add(productEntity1);
 
         when(productRepository.findAll()).thenReturn(productEntityList);
-
+        //When
         List<Product> result = productService.getAllProducts();
-
+        // Then
         verify(productRepository).findAll();
         Assertions.assertEquals(productEntityList.size(), result.size());
         Assertions.assertEquals(productEntityList.get(0).getId(), result.get(0).getId());
@@ -115,5 +116,40 @@ public class ProductServiceImplTest {
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals(productEntity.getId(), result.get().getId());
 
+    }
+
+    @Test
+    public void testUpdateProduct() {
+        // Given
+        Product product = new Product();
+        product.setId(101L);
+        product.setName("product name");
+        product.setPrice(new BigDecimal("130.00"));
+        product.setQuantity(200);
+
+        ProductEntity productEntity = new ProductEntity();
+        BeanUtils.copyProperties(productEntity, product);
+
+        Product productToUpdate = new Product();
+        BeanUtils.copyProperties(product, productToUpdate);
+        productToUpdate.setName("new product name");
+
+        ProductEntity updatedProductEntity = new ProductEntity();
+        BeanUtils.copyProperties(product, updatedProductEntity);
+        updatedProductEntity.setName("new product name");
+
+
+        when(productRepository.findById(101L)).thenReturn(Optional.of(productEntity));
+
+        when(productRepository.save(any(ProductEntity.class))).thenReturn(updatedProductEntity);
+
+        // When
+        Optional<Product> result = productService.updateProduct(101L, productToUpdate);
+        // Then
+        verify(productRepository).save(productEntity);
+        verify(productRepository).findById(101L);
+
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals("new product name", result.get().getName());
     }
 }

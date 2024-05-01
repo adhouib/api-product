@@ -52,4 +52,24 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).map(productDomainConverter::convert);
     }
 
+    /**
+     * Perform an update on existing product
+     * @param id the product to update
+     * @param productToUpdate new version of product to update
+     * @return an Optional Product
+     */
+    @Override
+    public Optional<Product> updateProduct(Long id, Product productToUpdate) {
+        Optional<ProductEntity> productEntity = productRepository.findById(id);
+        if (productEntity.isPresent()) {
+           productEntity.get().setName(productToUpdate.getName());
+           productEntity.get().setPrice(productToUpdate.getPrice());
+           productEntity.get().setQuantity(productToUpdate.getQuantity());
+           ProductEntity updatedProductEntity = productRepository.save(productEntity.get());
+           log.info("Product {} updated", id);
+           return Optional.of(updatedProductEntity).map(productDomainConverter::convert);
+        }
+        return Optional.empty();
+    }
+
 }
