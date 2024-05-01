@@ -1,8 +1,10 @@
 ### Microservice de Gestion de Produits
 
-#### Contexte : Vous travaillez pour une entreprise de commerce en ligne et on vous charge de développer un microservice pour gérer l'inventaire des produits.
+#### Contexte : 
+Vous travaillez pour une entreprise de commerce en ligne et on vous charge de développer un microservice pour gérer l'inventaire des produits.
 
-#### Objectif : Construire un microservice en utilisant Spring Boot qui expose une API REST pour ajouter, supprimer, mettre à jour et récupérer des informations sur les produits.
+#### Objectif : 
+Construire un microservice en utilisant Spring Boot qui expose une API REST pour ajouter, supprimer, mettre à jour et récupérer des informations sur les produits.
 
 #### Contraintes :
 
