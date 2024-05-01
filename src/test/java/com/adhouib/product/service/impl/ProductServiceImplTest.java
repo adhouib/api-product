@@ -17,6 +17,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -66,5 +68,31 @@ public class ProductServiceImplTest {
     public void testCreateProduct_Exception() {
         Product product = null;
         Assertions.assertThrows(TechnicalException.class , () -> productService.createProduct(product));
+    }
+
+    @Test
+    public void testGetAllProducts() {
+        List<ProductEntity> productEntityList = new LinkedList<>();
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setId(101L);
+        productEntity.setName("Product name");
+        productEntity.setPrice(new BigDecimal("130.00"));
+        productEntity.setQuantity(200);
+        productEntityList.add(productEntity);
+
+        ProductEntity productEntity1 = new ProductEntity();
+        productEntity1.setId(102L);
+        productEntity1.setName("Product name");
+        productEntity1.setPrice(new BigDecimal("160.00"));
+        productEntity1.setQuantity(120);
+        productEntityList.add(productEntity1);
+
+        when(productRepository.findAll()).thenReturn(productEntityList);
+
+        List<Product> result = productService.getAllProducts();
+
+        verify(productRepository).findAll();
+        Assertions.assertEquals(productEntityList.size(), result.size());
+        Assertions.assertEquals(productEntityList.get(0).getId(), result.get(0).getId());
     }
 }

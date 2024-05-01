@@ -8,6 +8,8 @@ import com.adhouib.product.service.api.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/product")
 public class ProductController {
@@ -32,4 +34,11 @@ public class ProductController {
         product = productService.createProduct(product);
         return productDTOConverter.convert(product);
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDTO> listProducts() {
+        return productService.getAllProducts().stream().map(productDTOConverter::convert).toList();
+    }
+
 }

@@ -9,6 +9,8 @@ import com.adhouib.product.service.api.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Service to manage Product Object
  */
@@ -37,4 +39,11 @@ public class ProductServiceImpl implements ProductService {
         log.info("Product {} created", productEntity.getId());
         return productDomainConverter.convert(productEntity);
     }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll().stream()
+                .map(productDomainConverter::convert).toList();
+    }
+
 }
