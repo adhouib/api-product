@@ -15,4 +15,6 @@ public interface ProductService {
     Optional<Product> getProductById(Long id);
 
     Optional<Product> updateProduct(Long id, Product productToUpdate);
+
+    void deleteProduct(Long id) throws TechnicalException;
 }

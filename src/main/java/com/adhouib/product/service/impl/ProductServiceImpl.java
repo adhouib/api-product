@@ -72,4 +72,14 @@ public class ProductServiceImpl implements ProductService {
         return Optional.empty();
     }
 
+
+    @Override
+    public void deleteProduct(Long id) throws TechnicalException {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            log.info("Product {} deleted", id);
+        } else {
+            throw new TechnicalException("Object not found with the given id" + id);
+        }
+    }
 }

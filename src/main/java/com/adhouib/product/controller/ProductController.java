@@ -65,4 +65,12 @@ public class ProductController {
                 .orElseThrow(() -> new TechnicalException("Object is null"));
     }
 
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable("id") Long id) throws TechnicalException {
+        if (id == null) {
+            throw new TechnicalException("id can't be null");
+        }
+        productService.deleteProduct(id);
+    }
 }

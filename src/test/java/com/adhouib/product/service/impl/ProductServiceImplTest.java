@@ -152,4 +152,26 @@ public class ProductServiceImplTest {
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals("new product name", result.get().getName());
     }
+
+    @Test
+    public void testDeleteProduct() throws TechnicalException {
+        // Given
+        when(productRepository.existsById(101L)).thenReturn(true);
+
+        // When
+        productService.deleteProduct(101L);
+
+        // Then
+        verify(productRepository).existsById(101L);
+        verify(productRepository).deleteById(101L);
+
+    }
+
+    @Test
+    public void testDeleteProductWhenNotExistInDB() {
+        // Given
+        when(productRepository.existsById(101L)).thenReturn(false);
+
+        Assertions.assertThrows(TechnicalException.class , () -> productService.deleteProduct(101L));
+    }
 }
