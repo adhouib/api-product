@@ -32,7 +32,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
-                  .requestMatchers("/api/v1/product").permitAll();
+                  .requestMatchers("/api/v1/product").permitAll()
+                  .requestMatchers("/api/v1/product/**").permitAll();
                 }).csrf(AbstractHttpConfigurer::disable).build();
     }
 

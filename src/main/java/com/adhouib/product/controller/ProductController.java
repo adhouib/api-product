@@ -41,4 +41,14 @@ public class ProductController {
         return productService.getAllProducts().stream().map(productDTOConverter::convert).toList();
     }
 
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDTO getProductById(@PathVariable("id") Long id) throws TechnicalException {
+        if (id == null) {
+            throw new TechnicalException("id can't be null");
+        }
+        return productService.getProductById(id).map(productDTOConverter::convert)
+                .orElseThrow(() -> new TechnicalException("Object not found"));
+    }
+
 }

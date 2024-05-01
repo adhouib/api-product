@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service to manage Product Object
@@ -44,6 +45,11 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll().stream()
                 .map(productDomainConverter::convert).toList();
+    }
+
+    @Override
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id).map(productDomainConverter::convert);
     }
 
 }

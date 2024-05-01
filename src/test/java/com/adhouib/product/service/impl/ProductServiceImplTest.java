@@ -19,6 +19,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -94,5 +95,25 @@ public class ProductServiceImplTest {
         verify(productRepository).findAll();
         Assertions.assertEquals(productEntityList.size(), result.size());
         Assertions.assertEquals(productEntityList.get(0).getId(), result.get(0).getId());
+    }
+
+    @Test
+    public void testGetProduct() {
+        // Given
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setId(101L);
+        productEntity.setName("Product name");
+        productEntity.setPrice(new BigDecimal("130.00"));
+        productEntity.setQuantity(200);
+
+        when(productRepository.findById(101L)).thenReturn(Optional.of(productEntity));
+        // Then
+
+        Optional<Product> result = productService.getProductById(101L);
+
+        verify(productRepository).findById(101L);
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(productEntity.getId(), result.get().getId());
+
     }
 }
